@@ -22,7 +22,7 @@ require("./config")(app);
 const capitalized = require("./utils/capitalized");
 const projectName = "basic-auth";
 
-app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
+app.locals.appTitle = `BiblioWeb`;
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");

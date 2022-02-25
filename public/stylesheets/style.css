@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -9,4 +9,14 @@ a {
 
 h1 {
   color: 15px;
+}
+
+.login-form,
+.login-form .btn,
+.login-form label,
+.main-title h1,
+.signup-form,
+.signup-form .btn,
+.signup-form label {
+  margin-top: 20px;
 }

@@ -1,4 +1,7 @@
 <div class="signup-form">
+{{#if errorMessage}}
+  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+{{/if}}
   <div class="card">
     <h5 class="card-header">Sign-up</h5>
     <div class="card-body">

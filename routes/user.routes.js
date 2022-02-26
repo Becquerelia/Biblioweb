@@ -3,7 +3,7 @@ const UserModel = require("../models/User.model.js")
 const bcrypt = require("bcryptjs");
 
 router.get("/signup", (req, res, next) => {
-    res.render("users/signup.hbs")
+    res.render("user/signup.hbs")
 } )
 
 router.post("/signup", async (req, res, next) => {
@@ -12,17 +12,16 @@ router.post("/signup", async (req, res, next) => {
 
     // Validacion
     if ( !username || !email || !password) {
-        res.render("users/signup.hbs", {
+        res.render("user/signup.hbs", {
            errorMessage: "You should fill up all fields"
         })
         return;
     }
 
-    const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/;
 
   if (!passwordRegex.test(password)) {
-    res.render("users/signup.hbs", {
+    res.render("user/signup.hbs", {
       errorMessage:
         "Must contain between 8 and 15 characters, a number, a special character, upper and lower cases",
     });
@@ -35,7 +34,7 @@ router.post("/signup", async (req, res, next) => {
     const foundUser = await UserModel.findOne({email})
     
     if (foundUser) {
-        res.render("users/signup.hbs", {
+        res.render("user/signup.hbs", {
             errorMessage:
               "This email is already registered",
           });
@@ -54,7 +53,7 @@ router.post("/signup", async (req, res, next) => {
     password: hashedPassword,
   });
 
-  res.redirect("/users/login");
+  res.redirect("/user/login");
  }
  catch (err) {
     next(err)
@@ -63,14 +62,14 @@ router.post("/signup", async (req, res, next) => {
 })
 
 router.get("/login", (req, res, next) => {
-    res.render("users/login.hbs")
+    res.render("user/login.hbs")
 })
 
 router.post("/login", async (req, res, next) => {
     const {username, password} = req.body
 
     if(!username || !password){
-        res.render("users/login.hbs", {
+        res.render("user/login.hbs", {
             errorMessage: "Please fill all fields"
         })
         return;
@@ -79,7 +78,7 @@ router.post("/login", async (req, res, next) => {
         const foundUser = await UserModel.findOne({ username });
 
     if (!foundUser) {
-        res.render("users/login.hbs", {
+        res.render("user/login.hbs", {
             errorMessage: "User not registered",
           });
           return;
@@ -87,7 +86,7 @@ router.post("/login", async (req, res, next) => {
         const passwordMatch= await bcrypt.compare(password, foundUser.password)
 
         if(!passwordMatch) {
-            res.render("users/login.hbs", {
+            res.render("user/login.hbs", {
                 errorMessage: "Wrong password",
             })
             return;

@@ -14,7 +14,8 @@ router.get("/signup", (req, res, next) => {
 router.post("/signup", async (req, res, next) => {
     const {username, email, password} = req.body
 
-    // Validacion
+    // Validation:
+
     if ( !username || !email || !password) {
         res.render("auth/signup.hbs", {
            errorMessage: "You should fill up all fields"
@@ -43,7 +44,7 @@ router.post("/signup", async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  // crear usuario tras validacion
+  // User Creation:
 
   await UserModel.create({
     username,
@@ -51,7 +52,7 @@ router.post("/signup", async (req, res, next) => {
     password: hashedPassword,
   });
 
-  res.redirect("/auth/login");
+  res.redirect("/user/login");
  }
  catch (err) {
     next(err)

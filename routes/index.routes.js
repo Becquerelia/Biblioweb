@@ -13,4 +13,7 @@ router.use("/user", userRoutes)
 const bookRoutes = require("./book.routes.js");
 router.use("/books", bookRoutes)
 
+const profileRoutes = require("./profile.routes.js");
+router.use("/profile", profileRoutes)
+
 module.exports = router;

@@ -1,25 +1,38 @@
 const router = require("express").Router();
-const BookModel = require("../models/Book.model.js")
 //const axios = require("axios")
 
-//! BOOK LIST ROUTE:
+const BookModel = require("../models/Book.model.js")
 
-router.get("/", (req, res, next) => {
-    //Buscar los títulos de cada libro en la API
-    res.render("books/book-list.hbs")    
+
+//! SEARCH BOOK GET ROUTE:
+
+router.get("/", async (req, res, next) => {
+    
+    res.render("books/search.hbs")    
 } )
 
-//! DETAIL BOOK ROUTE:
+
+//! SEARCH BOOK POST ROUTE (RESULTS):
 
 router.get("/:id", async (req, res, next)=>{
     const {id} = req.params.id
-    //Buscar libro en la base de datos:
+
+    try{
+        //Buscar libro en la base de datos:
     const bookFromDB = BookModel.findById(id)
     //Buscar libro en la API:
     const bookFromAPI = await axios.get(`apiUrl..${bookFromDB.apiID}`)
     //Renderizar vista:
-    res.render("books/book-detail.hbs") 
+    res.render("books/book-search.hbs") 
+
+    }
+    
+    catch (err) {
+        next(err)
+    }
 })
+
+//! BOOK DETAIL GET ROUTE:
 
 module.exports = router
 

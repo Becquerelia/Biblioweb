@@ -1,8 +1,15 @@
 <h2>Book Search</h2>
 
 <ul>
-{{#each mySearch}}
+{{#each filteredSearch}}
+
+
+
+<img src="{{volumeInfo.imageLinks.smallThumbnail}}" alt="Book cover">
 <li>{{volumeInfo.title}}</li>
+<a href="/books/{{volumeInfo.industryIdentifiers.0.identifier}}/details">Book details</a>
+
+
 {{/each}}
 
 </ul>

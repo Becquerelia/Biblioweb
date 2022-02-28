@@ -3,12 +3,10 @@ const mongoose = require("mongoose");
 const bookSchema = new mongoose.Schema({
     apiID: String,
     title: String, // se acordaran de esto
-    ownerID: [
-        {
+    ownerID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"         
-        }
-    ],
+    },
     status: {
         type: String,
         enum: ["Pending", "Reading", "Read"]

@@ -6,7 +6,7 @@
 {{/each}}
 <li>{{oneBookDetails.0.volumeInfo.description}}</li>
 
-
+{{#if isLoggedIn}}
 <form method="POST" action="/my-books/
 {{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/
 {{oneBookDetails.0.volumeInfo.title}}/pending">
@@ -25,3 +25,4 @@
   <button>Add to read</button>
 </form>
 
+{{/if}}

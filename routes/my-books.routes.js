@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const axios = require("axios");
 const BookModel = require("../models/Book.model.js");
+const isLoggedIn = require("../middlewares/isLoggedIn.js")
 
 // llevar my-books a index
 router.post("/:isbn/:title/pending", async (req, res, next) => {
@@ -39,7 +40,7 @@ router.post("/:isbn/:title/reading", async (req, res, next) => {
   }
 });
 
-router.post("/:isbn/:title/read", async (req, res, next) => {
+router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
   //? Qué info para llenar el libro
   //? Qué info tenemos
   //TODO Create book

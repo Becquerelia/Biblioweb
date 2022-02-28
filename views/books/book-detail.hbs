@@ -1,1 +1,27 @@
-<h2>Book detail</h2>
+<h2>{{oneBookDetails.0.volumeInfo.title}}</h2>
+<img src="{{oneBookDetails.0.volumeInfo.imageLinks.smallThumbnail}}" alt="Book cover">
+<li>{{oneBookDetails.0.volumeInfo.categories}}</li>
+{{#each oneBookDetails.0.volumeInfo.authors}}
+<li>{{this}}</li>
+{{/each}}
+<li>{{oneBookDetails.0.volumeInfo.description}}</li>
+
+
+<form method="POST" action="/my-books/
+{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/
+{{oneBookDetails.0.volumeInfo.title}}/pending">
+  <button>Add to pending read</button>
+</form>
+
+<form method="POST" action="/my-books/
+{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/
+{{oneBookDetails.0.volumeInfo.title}}/reading">
+  <button>Reading</button>
+</form>
+
+<form method="POST" action="/my-books/
+{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/
+{{oneBookDetails.0.volumeInfo.title}}/read">
+  <button>Add to read</button>
+</form>
+

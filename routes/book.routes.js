@@ -42,9 +42,12 @@ router.get("/:isbn/details", async (req, res, next) => {
   const { isbn } = req.params;
   try{
     const oneBook = await axios.get(
-    `https://www.googleapis.com/books/v1/volumes?q=isbn:"${isbn}"&=${process.env.APIKEY}`
+    `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&=${process.env.APIKEY}`
   )  
-  res.render("books/book-detail.hbs")
+
+  const oneBookDetails = oneBook.data.items
+  //console.log("isbn details", oneBookDetails)
+  res.render("books/book-detail.hbs", {oneBookDetails})
   }
   catch (err) {
     next(err)
@@ -53,22 +56,6 @@ router.get("/:isbn/details", async (req, res, next) => {
   
 });
 
-//router.post("/", async (req, res, next)=>{
-//const {id} = req.params.id
 
-//try{
-//Buscar libro en la base de datos:
-//const bookFromDB = BookModel.findById(id)
-//Buscar libro en la API:
-//const bookFromAPI = await axios.get(`apiUrl..${bookFromDB.apiID}`)
-//Renderizar vista:
-//res.render("books/book-search.hbs")
-
-//}
-
-//catch (err) {
-//    next(err)
-//}
-//})
 
 module.exports = router;

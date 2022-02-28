@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-    apiID: String,
+    // _id que lo crea mongo
+    apiISBN: String,
     title: String, // se acordaran de esto
     ownerID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -14,6 +15,6 @@ const bookSchema = new mongoose.Schema({
     review: String,    
 })
 
-const BookModel = mongoose.model("book", bookSchema);
+const BookModel = mongoose.model("Book", bookSchema);
 
 module.exports = BookModel;

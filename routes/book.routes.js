@@ -1,5 +1,5 @@
 const router = require("express").Router();
-//const axios = require("axios")
+const axios = require("axios")
 
 const BookModel = require("../models/Book.model.js")
 
@@ -15,17 +15,17 @@ router.get("/", async (req, res, next) => {
 //! SEARCH BOOK POST ROUTE (RESULTS):
 
 router.post("/", async (req, res, next)=>{
-    const {title} = req.body.title
+    const {title} = req.body
     
     try{        
-        const bookFromDB = BookModel.findById(id)
-        //Buscar libro en la API:
+        const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&=${process.env.APIKEY}`)
+        let mySearch = bookFromAPI.data.items
+        mySearch.forEach((eachResult)=>
+        console.log(eachResult.volumeInfo.title)) 
+        //ordernar por publishedDate   
         
-        //const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookFromDB.apiID}&key=${process.env.APIKEY}`, {
-            //params: `intitle:${req.body.title}`})
-            console.log(bookFromAPI)
         //Renderizar vista:
-        res.render("books/book-search.hbs") 
+        res.render("books/book-result.hbs", {mySearch}) 
     }
     
     catch (err) {

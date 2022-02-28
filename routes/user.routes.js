@@ -94,7 +94,7 @@ router.post("/login", async (req, res, next) => {
             })
             return;
         }
-        req.session.user = foundUser
+        req.session.user = foundUser        
         req.app.locals.isLoggedIn = true
         res.redirect("/profile")
     }

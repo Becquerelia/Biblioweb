@@ -8,6 +8,7 @@ const isLoggedIn = require("../middlewares/isLoggedIn.js")
 router.get("/", isLoggedIn, (req, res, next)=>{
     UserModel.findById(req.session.user._id)
     .then((user)=>{
+        const actualUser = req.session.user.username
         res.render("profile/user-profile.hbs", {user})
     })
     .catch((err)=>{

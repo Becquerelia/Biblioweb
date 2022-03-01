@@ -53,7 +53,7 @@ router.get("/:isbn/details", async (req, res, next) => {
   )  
 
   const oneBookDetails = oneBook.data.items
-  //console.log("isbn details", oneBookDetails)
+  console.log("isbn details", oneBookDetails)
   res.render("books/book-detail.hbs", {oneBookDetails})
   }
   catch (err) {

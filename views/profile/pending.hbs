@@ -1,5 +1,21 @@
 <h2>Pending</h2>
 
-{{#each findBooks}}
-{{this.title}}
-{{/each}}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Book title</th>
+      <th scope="col" width="100px">Move to reading</th>
+      <th scope="col" width="100px">Move to read</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each findBooks}}
+    <tr>
+      <td>{{this.title}}</td>
+      <td><button>Reading</button></td>
+      <td><button>Read</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

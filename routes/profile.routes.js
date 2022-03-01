@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const UserModel = require("../models/User.model.js")
 const BookModel = require("../models/Book.model.js");
-const isLoggedIn = require("../middlewares/isLoggedIn.js")
+const isLoggedIn = require("../middlewares/isLoggedIn.js");
+const { default: axios } = require("axios");
 
 
 //! PRIVATE PROFILE ROUTE:
@@ -26,12 +27,17 @@ router.get("/pending", isLoggedIn, async (req, res, next)=> {
     const {_id} = req.session.user
     try{
         const findBooks = await BookModel.find({status: "Pending", ownerID: _id})
+        // console.log(findBooks);
         //const pendingBooks = findBooks.filter((eachBook)=>{
           //  if (eachBook.ownerID === _id) {
             //    return true
             //}
-        //})        
-        res.render("profile/pending.hbs", {findBooks})
+        //})    
+        const bookCover = await axios.get( `https://www.googleapis.com/books/v1/volumes?q=isbn:${findBooks[0].apiISBN}&=${process.env.APIKEY}`)  
+        console.log(bookCover);  
+
+        const oneBookDetails = bookCover.data.items
+        res.render("profile/pending.hbs", {findBooks, oneBookDetails})
     }
     catch (err) {
         next(err)

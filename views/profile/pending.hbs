@@ -13,8 +13,8 @@
       {{#each findBooks}}
     <tr>
       <td>{{this.title}}</td>
-      <td><button>Reading</button></td>
-      <td><button>Read</button></td>
+      <td><form method="POST" action="/profile/{{this._id}}/editToReading"><button>Reading</button></form></td>
+      <td><form method="POST" action="/profile/{{this._id}}/editToRead"><button>Read</button></form></td>
     </tr>
     {{/each}}
   </tbody>

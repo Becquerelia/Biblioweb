@@ -3,6 +3,7 @@ const UserModel = require("../models/User.model.js")
 const BookModel = require("../models/Book.model.js");
 const isLoggedIn = require("../middlewares/isLoggedIn.js");
 const { default: axios } = require("axios");
+const { Router } = require("express");
 
 
 //! PRIVATE PROFILE ROUTE:
@@ -66,6 +67,40 @@ router.get("/read", isLoggedIn, async (req, res, next)=> {
         next(err)
     }
 })
+
+//! UPDATE STATUS ROUTE
+
+
+
+router.post("/:idBook/editToReading", async (req, res, next) => {
+    const {idBook} = req.params
+    try{
+        const editBook = await BookModel.findByIdAndUpdate(idBook, {status: "Reading"})
+        
+        res.redirect("/profile/pending")
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+router.post("/:idBook/editToRead", async (req, res, next) => {
+    const {idBook} = req.params
+    try{
+        const editBook = await BookModel.findByIdAndUpdate(idBook, {status: "Read"})
+        
+        res.redirect("/profile/pending")
+    }
+    catch (err) {
+        next(err)
+    }
+})
+
+
+
+
+
+
 
 
 //router.post("/", async (req, res, next)=>{

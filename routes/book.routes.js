@@ -27,12 +27,13 @@ router.post("/", async (req, res, next) => {
     );
     let mySearch = bookFromAPI.data.items;
     const filteredSearch = mySearch.filter((eachResult) => {
-         const haveCoverImage = eachResult.volumeInfo.imageLinks;
-      if ( haveCoverImage !== undefined) {
-        console.log(eachResult.volumeInfo.title);  
+      const haveCoverImage = eachResult.volumeInfo.imageLinks;
+      const apiISBN = eachResult.volumeInfo.industryIdentifiers[0].identifier
+
+      if ( haveCoverImage !== undefined && apiISBN !== undefined) {
+        //console.log(eachResult.volumeInfo.title);  
         return true
       }
-      
     })
     
 
@@ -53,7 +54,7 @@ router.get("/:isbn/details", async (req, res, next) => {
   )  
 
   const oneBookDetails = oneBook.data.items
-  console.log("isbn details", oneBookDetails)
+  //console.log("isbn details", oneBookDetails)
   res.render("books/book-detail.hbs", {oneBookDetails})
   }
   catch (err) {

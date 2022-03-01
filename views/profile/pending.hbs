@@ -3,18 +3,20 @@
 
 <table class="table">
   <thead>
-    <tr>
+    <tr style="background-color: lightblue">
       <th scope="col">Book title</th>
-      <th scope="col" width="100px">Move to reading</th>
-      <th scope="col" width="100px">Move to read</th>
+      <th scope="col" width="100px"></th>
+      <th scope="col" width="100px"></th>
+      <th scope="col" width="100px"></th>
     </tr>
   </thead>
   <tbody>
       {{#each findBooks}}
     <tr>
       <td>{{this.title}}</td>
-      <td><form method="POST" action="/profile/{{this._id}}/editToReading"><button>Reading</button></form></td>
-      <td><form method="POST" action="/profile/{{this._id}}/editToRead"><button>Read</button></form></td>
+      <td><form method="POST" action="/profile/{{this._id}}/editToReading"><button class="btn btn-outline-info" style="width:90px">Reading</button></form></td>
+      <td><form method="POST" action="/profile/{{this._id}}/editToRead"><button class="btn btn-outline-info" style="width:90px">Read</button></form></td>
+      <td><form method="POST" action="/profile/{{this._id}}/deleteBook"><button class="btn btn-outline-danger" style="width:90px">Delete</button></form></td>
     </tr>
     {{/each}}
   </tbody>

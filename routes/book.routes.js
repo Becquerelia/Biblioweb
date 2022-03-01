@@ -12,23 +12,31 @@ router.get("/", async (req, res, next) => {
 //! SEARCH BOOK POST ROUTE (RESULTS):
 
 router.post("/", async (req, res, next) => {
-  const { title } = req.body;
+  const { title, author } = req.body;
 
-  if(!title){
+  if(!title && !author ){
     res.render("books/book-search.hbs", {
-        errorMessage: "Please fill title field"
+        errorMessage: "Please fill at least one search field"
     })
     return;
   }
 
   try {
-    const bookFromAPI = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&=${process.env.APIKEY}`
-    );
+    const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"+inauthor:"${author}"&=${process.env.APIKEY}`);
+    
     let mySearch = bookFromAPI.data.items;
+    console.log(mySearch)
+      if(!mySearch){
+        res.render("books/book-search.hbs", {
+          errorMessage: "No results, please search again"
+      })
+      }    
+
     const filteredSearch = mySearch.filter((eachResult) => {
       const haveCoverImage = eachResult.volumeInfo.imageLinks;
       const apiISBN = eachResult.volumeInfo.industryIdentifiers[0].identifier
+
+
 
       if ( haveCoverImage !== undefined && apiISBN !== undefined) {
         //console.log(eachResult.volumeInfo.title);  

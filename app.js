@@ -20,9 +20,9 @@ require("./config")(app);
 
 // default value for title local
 const capitalized = require("./utils/capitalized");
-const projectName = "basic-auth";
+const projectName = "libraryweb";
 
-app.locals.appTitle = `BiblioWeb`;
+app.locals.appTitle = `LibraryWeb`;
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");

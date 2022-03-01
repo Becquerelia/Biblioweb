@@ -70,7 +70,6 @@ router.post("/:idBook/editToReading", async (req, res, next) => {
     const {idBook} = req.params
     try{
         const editBook = await BookModel.findByIdAndUpdate(idBook, {status: "Reading"})
-        
         res.redirect("/profile/reading")
     }
     catch (err) {
@@ -144,19 +143,20 @@ router.post("/delete", async (req, res, next) => {
     // console.log(req.param)
     try {
         // buscar los libros del usuario y borrarlos para limpiar la base de datos
-        /*
-        const foundBooks = await BookModel.find({ownerID: req.session.user._id})
-        foundBooks.forEach((eachBook) => {
-            console.log(eachBook._id)
+        //const foundBooks = await mongoose.biblioweb(`books`).deleteMany({ownerID: req.session.user._id})
+       // const foundBooks = await BookModel.find({ownerID: req.session.user._id})
+
+       // foundBooks.forEach((eachBook) => {
+       //     console.log(eachBook._id)
             //BookModel.findByIdAndDelete(eachBook._id)
-        })
-        */
+      //  })
         
+        /*
         await UserModel.findByIdAndDelete(req.session.user._id)
         req.session.destroy()
         req.app.locals.isLoggedIn = false
         res.redirect("/")
-        
+        */
     }
     catch (err) {
         next(err)

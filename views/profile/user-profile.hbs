@@ -5,6 +5,19 @@
 <h2>My profile</h2>
 
 <h3>Welcome, {{actualUser.username}}!</h3>
+
+<form method="GET" action="/profile/pending">
+<button>Pending</button>
+</form>
+
+<form method="GET" action="/profile/reading">
+<button>Reading</button>
+</form>
+
+<form method="GET" action="/profile/read">
+<button>Read</button>
+</form>
+
 <form method="POST" action="/profile/delete">
-<button>Delete</button>
+<button>Delete User</button>
 </form>

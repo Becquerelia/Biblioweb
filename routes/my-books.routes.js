@@ -4,7 +4,7 @@ const BookModel = require("../models/Book.model.js");
 const isLoggedIn = require("../middlewares/isLoggedIn.js")
 
 // llevar my-books a index
-router.post("/:isbn/:title/pending", async (req, res, next) => {
+router.post("/:isbn/:title/pending", isLoggedIn, async (req, res, next) => {
   //? Qué info para llenar el libro
   //? Qué info tenemos
   //TODO Create book
@@ -13,6 +13,7 @@ router.post("/:isbn/:title/pending", async (req, res, next) => {
     const addPendingBook = await BookModel.create({
       apiISBN: isbn,
       title: title,
+      ownerID: req.session.user._id,
       status: "Pending",
       review: "",
     });
@@ -22,7 +23,7 @@ router.post("/:isbn/:title/pending", async (req, res, next) => {
   }
 });
 
-router.post("/:isbn/:title/reading", async (req, res, next) => {
+router.post("/:isbn/:title/reading", isLoggedIn, async (req, res, next) => {
   //? Qué info para llenar el libro
   //? Qué info tenemos
   //TODO Create book
@@ -31,6 +32,7 @@ router.post("/:isbn/:title/reading", async (req, res, next) => {
     const addPendingBook = await BookModel.create({
       apiISBN: isbn,
       title: title,
+      ownerID: req.session.user._id,
       status: "Reading",
       review: "",
     });
@@ -49,6 +51,7 @@ router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
     const addPendingBook = await BookModel.create({
       apiISBN: isbn,
       title: title,
+      ownerID: req.session.user._id,
       status: "Read",
       review: "",
     });
@@ -58,22 +61,6 @@ router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
   }
 });
 
-//router.post("/", async (req, res, next)=>{
-//const {id} = req.params.id
 
-//try{
-//Buscar libro en la base de datos:
-//const bookFromDB = BookModel.findById(id)
-//Buscar libro en la API:
-//const bookFromAPI = await axios.get(`apiUrl..${bookFromDB.apiID}`)
-//Renderizar vista:
-//res.render("books/book-search.hbs")
-
-//}
-
-//catch (err) {
-//    next(err)
-//}
-//})
 
 module.exports = router;

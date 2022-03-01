@@ -46,6 +46,7 @@ module.exports = (app) => {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    rolling: true,
     cookie:{
       maxAge: 1000 * 60 * 60 * 24 
     },

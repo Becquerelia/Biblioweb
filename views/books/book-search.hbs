@@ -10,6 +10,10 @@
 
         <label class="form-label" for="author">Author:</label>
         <input class="form-control" type="text" name="author" />
+
+        {{#if errorMessage}}
+        <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+        {{/if}}
         
         <button class="btn btn-outline-success" name="submit">Search book</button>
       </form>

@@ -14,6 +14,13 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const { title } = req.body;
 
+  if(!title){
+    res.render("books/book-search.hbs", {
+        errorMessage: "Please fill title field"
+    })
+    return;
+  }
+
   try {
     const bookFromAPI = await axios.get(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&=${process.env.APIKEY}`

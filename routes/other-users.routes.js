@@ -45,7 +45,7 @@ router.get("/:id", async (req, res, next)=>{
     try {
         const foundUser = await UserModel.findById(id)
         const bookList = await BookModel.find({ownerID: id})
-        // console.log(bookList);
+        console.log(bookList);
         
 
 

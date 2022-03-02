@@ -33,11 +33,12 @@ router.post("/", async (req, res, next) => {
     }
     //const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&key=${process.env.APIKEY}`);
     let mySearch = bookFromAPI.data.items;
-    console.log(mySearch)
+    //console.log(mySearch)
       if(!mySearch){
         res.render("books/book-search.hbs", {
           errorMessage: "No results, please search again"
       })
+      return
       }    
 
     const filteredSearch = mySearch.filter((eachResult) => {
@@ -51,7 +52,7 @@ router.post("/", async (req, res, next) => {
         return true
       }
     })
-    
+    console.log(filteredSearch)
 
     //Renderizar vista:
     res.render("books/book-result.hbs", { filteredSearch });

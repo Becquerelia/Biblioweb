@@ -44,7 +44,13 @@ router.get("/:id", async (req, res, next)=>{
     const {id} = req.params
     try {
         const foundUser = await UserModel.findById(id)
-        res.render("other-users/other-user-profile.hbs", {foundUser})
+        const bookList = await BookModel.find({ownerID: id})
+        // console.log(bookList);
+        
+
+
+
+        res.render("other-users/other-user-profile.hbs", {foundUser, bookList})
     }
     catch (err) {
         next(err)

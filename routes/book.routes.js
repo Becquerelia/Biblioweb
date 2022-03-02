@@ -45,7 +45,7 @@ router.post("/", async (req, res, next) => {
       const haveCoverImage = eachResult.volumeInfo.imageLinks;
       const apiISBN = eachResult.volumeInfo.industryIdentifiers[0].identifier
 
-
+      console.log("ën filter", haveCoverImage, apiISBN)
 
       if ( haveCoverImage !== undefined && apiISBN !== undefined) {
         //console.log(eachResult.volumeInfo.title);  

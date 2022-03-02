@@ -1,0 +1,10 @@
+<h2>User list</h2>
+
+{{#if errorMessage}}
+   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+{{/if}}
+
+{{#each searchedUser}}
+<a href="/other-users/{{_id}}">{{username}}</a> 
+{{/each}}
+

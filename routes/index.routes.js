@@ -19,6 +19,9 @@ router.use("/profile", profileRoutes)
 const myBooksRoutes = require("./my-books.routes.js");
 router.use("/my-books", myBooksRoutes)
 
+const otherUsersRoutes = require("./other-users.routes.js")
+router.use("/other-users", otherUsersRoutes)
+
 
 
 module.exports = router;

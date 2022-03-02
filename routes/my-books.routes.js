@@ -3,11 +3,10 @@ const axios = require("axios");
 const BookModel = require("../models/Book.model.js");
 const isLoggedIn = require("../middlewares/isLoggedIn.js")
 
-// llevar my-books a index
+//! ADD BOOK TO PENDING LIST ROUTE:
+
 router.post("/:isbn/:title/pending", isLoggedIn, async (req, res, next) => {
-  //? Qué info para llenar el libro
-  //? Qué info tenemos
-  //TODO Create book
+  
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({
@@ -23,10 +22,10 @@ router.post("/:isbn/:title/pending", isLoggedIn, async (req, res, next) => {
   }
 });
 
+//! ADD BOOK TO READING LIST ROUTE:
+
 router.post("/:isbn/:title/reading", isLoggedIn, async (req, res, next) => {
-  //? Qué info para llenar el libro
-  //? Qué info tenemos
-  //TODO Create book
+ 
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({
@@ -42,10 +41,10 @@ router.post("/:isbn/:title/reading", isLoggedIn, async (req, res, next) => {
   }
 });
 
+//! ADD BOOK TO READ LIST ROUTE:
+
 router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
-  //? Qué info para llenar el libro
-  //? Qué info tenemos
-  //TODO Create book
+
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({

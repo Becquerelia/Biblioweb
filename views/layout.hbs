@@ -54,9 +54,10 @@
               </li>
             </ul>
             {{#if isLoggedIn}}
-            <form class="navbar-nav right">
+            <form method="POST" action="/other-users" class="navbar-nav right">
               <input
                 class="form-control me-2"
+                name="searchUsername"
                 type="search"
                 placeholder="Search username"
                 aria-label="Search"

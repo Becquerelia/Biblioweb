@@ -27,7 +27,8 @@ router.post("/", async (req, res, next) => {
     if (!title) {
       bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${author}"&key=${process.env.APIKEY}`)
     } else if (!author) {
-      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&key=${process.env.APIKEY}`)
+      //bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&key=${process.env.APIKEY}`)
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"`)
     } else {
      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"+inauthor:"${author}"&key=${process.env.APIKEY}`);
     }

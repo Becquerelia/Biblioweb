@@ -6,6 +6,13 @@
 
 <h3>Welcome, {{actualUser.username}}!</h3>
 
+<img src="{{actualUser.profilePic}}" alt="{{actualUser.username}} Profile-pic" width="150px">
+  <form action="/profile/upload/profile-pic" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image">
+    <button>Add profile pic</button>
+  </form>
+
+
 <form method="GET" action="/profile/pending">
 <button>Pending</button>
 </form>

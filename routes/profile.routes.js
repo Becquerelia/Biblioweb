@@ -5,6 +5,7 @@ const isLoggedIn = require("../middlewares/isLoggedIn.js");
 const { default: axios } = require("axios");
 const { Router } = require("express");
 const async = require("hbs/lib/async");
+const uploader = require("../middlewares/uploader.js");
 
 
 //! PRIVATE PROFILE ROUTE:
@@ -21,6 +22,30 @@ router.get("/", isLoggedIn, (req, res, next)=>{
     .catch((err)=>{
         next(err)
     })        
+})
+
+
+//! UPDATE PROFILE PICTURE
+
+router.post("/upload/profile-pic", uploader.single("image"), (req, res, next) => {
+    const {image} = req.body
+
+
+    if(!image){
+        res.render("profile/user-profile.hbs", {
+            errorMessage: "Please select a picture"
+        })
+        return;
+      }
+
+    UserModel.findByIdAndUpdate(req.session.user._id, {profilePic: req.file.path})
+    .then(() => {
+        
+        res.redirect("/profile")
+    })
+    .catch((err) => {
+        next(err)
+    })
 })
 
 //! PROFILE/COLLECTIONS CREATE ROUTES:

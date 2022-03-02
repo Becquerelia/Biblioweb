@@ -11,9 +11,37 @@ h1 {
   color: 15px;
 }
 
-nav form{
-  padding-top: 12px;
+.card img {
+  max-width: 8rem;
 }
+
+.card-detail-btn{
+  width: 200px;
+  margin-right: 1rem;
+}
+
+.card-library-btn{
+  width: 8rem;
+  margin-right: 1rem;
+}
+
+.card-library{
+  padding-top: 1rem;
+  margin-right: 2rem;
+  width: 10rem;
+}
+
+.card-list {
+  width: 10rem;
+  height: 22rem;
+  align-items: center;
+}
+
+.alert,
+.card-detail,
+.card-library,
+.card-list,
+.card-user-detail,
 .login-form,
 .login-form .btn,
 .login-form label,
@@ -21,5 +49,13 @@ nav form{
 .signup-form,
 .signup-form .btn,
 .signup-form label {
-  margin-top: 20px;
+  margin-top: 1rem;
+}
+
+.user-profile-btn{
+  width:14rem;
+}
+
+.mr-1{
+  margin-right: 1rem;
 }

@@ -2,29 +2,153 @@
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
 
-<h2>My profile</h2>
-
 <h3>Welcome, {{actualUser.username}}!</h3>
 
-<img src="{{actualUser.profilePic}}" alt="{{actualUser.username}} Profile-pic" width="150px">
-  <form action="/profile/upload/profile-pic" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image">
-    <button>Add profile pic</button>
-  </form>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link active"
+      id="profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#profile"
+      type="button"
+      role="tab"
+      aria-controls="profile"
+      aria-selected="true"
+    >Profile</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link"
+      id="library-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#library"
+      type="button"
+      role="tab"
+      aria-controls="library"
+      aria-selected="false"
+    >Library</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
 
+  <div
+    class="tab-pane fade show active"
+    id="profile"
+    role="tabpanel"
+    aria-labelledby="profile-tab"
+  >
+    <div class="card mb-3 card-user-detail" style="max-width: 800px;">
+      <div class="row g-0">
 
-<form method="GET" action="/profile/pending">
-<button>Pending</button>
-</form>
+        <div class="col-md-3">
+          <img
+            class="img-fluid rounded-start"
+            src="{{actualUser.profilePic}}"
+            alt="{{actualUser.username}} Profile-pic"
+          />
+        </div>
 
-<form method="GET" action="/profile/reading">
-<button>Reading</button>
-</form>
+        <div class="col-md-9">
+          <div class="card-body">
+            <h5 class="card-title">About Me</h5>
+            <p class="card-text">This is a wider card with supporting text below
+              as a natural lead-in to additional content. This content is a
+              little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins
+                ago</small></p>
+            <form
+              action="/profile/upload/profile-pic"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="d-flex">
+                <button class="btn btn-outline-success mr-1">Add profile pic</button>
+                <input
+                  type="file"
+                  name="image"
+                  class="btn btn-outline-success"
+                />
+              </div>
+            </form>
 
-<form method="GET" action="/profile/read">
-<button>Read</button>
-</form>
+            <div class="d-flex">
+              <form method="POST" action="/profile/edit">
+                <button class="btn btn-outline-success user-profile-btn mr-1">Edit my
+                  user info</button>
+              </form>
+              <form method="POST" action="/profile/delete">
+                <button class="btn btn-outline-danger user-profile-btn">Delete
+                  my user account</button>
+              </form>
+            </div>
 
-<form method="POST" action="/profile/delete">
-<button>Delete User</button>
-</form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div
+    class="tab-pane fade"
+    id="library"
+    role="tabpanel"
+    aria-labelledby="library-tab"
+  >
+    <div class="d-flex">
+      <div class="card card-library">
+        <img
+          src="/images/pending.png"
+          class="card-img-top"
+          alt="Pending read image"
+          style="margin: auto"
+        />
+        <div class="card-body">
+          <!-- Estos se pueden añadir a los otros cards también si queréis poner algo más en la tarjeta
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card
+            title and make up the bulk of the card's content.</p>
+            -->
+          <form method="GET" action="/profile/pending">
+            <button
+              class="btn btn-outline-info card-library-btn"
+            >Pending</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card card-library">
+        <img
+          src="/images/reading.png"
+          class="card-img-top"
+          alt="Reading image"
+          style="margin: auto"
+        />
+        <div class="card-body">
+          <form method="GET" action="/profile/reading">
+            <button
+              class="btn btn-outline-info card-library-btn"
+            >Reading</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card card-library">
+        <img
+          src="/images/read.png"
+          class="card-img-top"
+          alt="Read image"
+          style="margin: auto"
+        />
+        <div class="card-body">
+          <form method="GET" action="/profile/read">
+            <button
+              class="btn btn-outline-success card-library-btn"
+            >Read</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,20 +1,21 @@
-        {{#if errorMessage}}
-        <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
-        {{/if}}
+{{#if errorMessage}}
+<div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+{{/if}}
 
 <div class="signup-form">
-
   <div class="card">
     <h5 class="card-header">Search a book:</h5>
     <div class="card-body">
       <form action="/books" method="POST">
 
         <label class="form-label"  for="title">Title:</label>
-        <input class="form-control" type="text" name="title" />
+        <input class="form-control" type="text" name="title"/>
 
         <label class="form-label" for="author">Author:</label>
         <input class="form-control" type="text" name="author" />
         
+        <div class="alert alert-warning" role="alert">Please enter a title or an author for your search...</div>
+
         <button class="btn btn-outline-success" name="submit">Search book</button>
       </form>
     </div>

@@ -13,6 +13,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   const { title, author } = req.body;
+  //const { title } = req.body;
 
   if(!title && !author ){
     res.render("books/book-search.hbs", {
@@ -22,8 +23,15 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
-    const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"+inauthor:"${author}"&=${process.env.APIKEY}`);
-    
+    let bookFromAPI
+    if (!title) {
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${author}"&key=${process.env.APIKEY}`)
+    } else if (!author) {
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&key=${process.env.APIKEY}`)
+    } else {
+     bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"+inauthor:"${author}"&key=${process.env.APIKEY}`);
+    }
+    //const bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"&key=${process.env.APIKEY}`);
     let mySearch = bookFromAPI.data.items;
     console.log(mySearch)
       if(!mySearch){

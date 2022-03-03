@@ -140,29 +140,6 @@ router.post("/:idBook/deleteBook", async (req, res, next) => {
 })
 
 
-
-
-//router.post("/", async (req, res, next)=>{
-//const {id} = req.params.id
-
-//try{
-//Buscar libro en la base de datos:
-//const bookFromDB = BookModel.findById(id)
-//Buscar libro en la API:
-//const bookFromAPI = await axios.get(`apiUrl..${bookFromDB.apiID}`)
-//Renderizar vista:
-//res.render("books/book-search.hbs")
-
-//}
-
-//catch (err) {
-//    next(err)
-//}
-//})
-
-
-
-
 //! DELETE USER ROUTE:
 
 router.post("/delete", async (req, res, next) => {

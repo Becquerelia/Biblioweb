@@ -15,9 +15,9 @@ router.get("/", isLoggedIn, (req, res, next)=>{
     
     .then((user)=>{
         // console.log(req.session.user)
-        const actualUser = req.session.user
+        // const actualUser = req.session.user
         // console.log(actualUser)
-        res.render("profile/user-profile.hbs", {actualUser})
+        res.render("profile/user-profile.hbs", {user})
     })
     .catch((err)=>{
         next(err)
@@ -31,7 +31,7 @@ router.post("/upload/profile-pic", uploader.single("image"), (req, res, next) =>
     const {image} = req.body
 
 
-    if(!image){
+    if(!req.file){
         res.render("profile/user-profile.hbs", {
             errorMessage: "Please select a picture"
         })

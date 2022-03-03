@@ -53,11 +53,18 @@ router.post("/", async (req, res, next) => {
         return true
       }
     })
-    console.log(filteredSearch)
+    // console.log(filteredSearch)
 
     //Renderizar vista:
-    res.render("books/book-result.hbs", { filteredSearch });
-  } catch (err) {
+    if(filteredSearch.length > 0){
+      res.render("books/book-result.hbs", { filteredSearch });
+    } else {
+      res.render("books/book-search.hbs", {
+        errorMessage: "There are no results with your search criteria and our filter policy. Please try again with different parameters."
+      })
+      return
+    }
+    } catch (err) {
     next(err);
   }
 });

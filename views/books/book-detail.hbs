@@ -2,7 +2,7 @@
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
 
-<div class="card card-detail mb-3">
+<div class="card card-detail mb-3 card-book">
   <div class="row g-0">
     <div class="col-2">
       <img
@@ -13,12 +13,12 @@
     </div>
     <div class="col-10">
       <div class="card-body">
-        <h5 class="card-title">{{oneBookDetails.0.volumeInfo.title}}</h5>
+        <h5 class="card-title" style="font-weight:bold">{{oneBookDetails.0.volumeInfo.title}}</h5>
         <p class="card-text"><small
             class="text-muted"
           >{{oneBookDetails.0.volumeInfo.categories}}</small></p>
         <div class="d-flex">
-          <div>Authors</div>
+          <div style="font-weight:bold">Authors</div>
           <ul>
             {{#each oneBookDetails.0.volumeInfo.authors}}
               <li>{{this}}</li>
@@ -32,7 +32,7 @@
               method="POST"
               action="/my-books/{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/{{oneBookDetails.0.volumeInfo.title}}/pending"
             >
-              <button class="btn btn-outline-info card-detail-btn">Add to
+              <button class="btn btn-outline-success card-detail-btn">Add to
                 pending read</button>
             </form>
             <form
@@ -40,7 +40,7 @@
               action="/my-books/{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/{{oneBookDetails.0.volumeInfo.title}}/reading"
             >
               <button
-                class="btn btn-outline-info card-detail-btn"
+                class="btn btn-outline-success card-detail-btn"
               >Add to reading</button>
             </form>
             <form

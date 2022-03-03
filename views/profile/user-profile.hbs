@@ -4,7 +4,7 @@
 
 <h3>Welcome, {{user.username}}!</h3>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs header-blue" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
     <button
       class="nav-link active"
@@ -15,6 +15,7 @@
       role="tab"
       aria-controls="profile"
       aria-selected="true"
+      style="font-weight:bold"
     >Profile</button>
   </li>
   <li class="nav-item" role="presentation">
@@ -27,6 +28,7 @@
       role="tab"
       aria-controls="library"
       aria-selected="false"
+      style="font-weight:bold"
     >Library</button>
   </li>
 </ul>
@@ -38,8 +40,8 @@
     role="tabpanel"
     aria-labelledby="profile-tab"
   >
-    <div class="card mb-3 card-user-detail" style="max-width: 800px;">
-      <div class="row g-0">
+    <div class="card mb-3 card-user-detail card-profile" style="max-width: 800px;">
+      <div class="row g-0 card-user-color">
 
         <div class="col-md-3">
           {{#if user.profilePic}}
@@ -71,7 +73,7 @@
 
         <div class="col-md-9">
           <div class="card-body">
-            <h5 class="card-title">About Me</h5>
+            <h5 class="card-title" style="font-weight:bold">About Me</h5>
             <p class="card-text">This is a wider card with supporting text below
               as a natural lead-in to additional content. This content is a
               little bit longer.</p>
@@ -85,11 +87,11 @@
                 enctype="multipart/form-data"
               >
                 <div class="d-flex">
-                  <button class="btn btn-outline-success mr-1">Add profile pic</button>
+                  <button class="btn btn-outline-info mr-1">Add profile pic</button>
                   <input
                     type="file"
                     name="image"
-                    class="btn btn-outline-success"
+                    class="btn btn-outline-info"
                   />
                 </div>
               </form>
@@ -97,7 +99,7 @@
             <div class="d-flex">
               <form method="POST" action="/profile/edit">
                 <button
-                  class="btn btn-outline-success user-profile-btn mr-1"
+                  class="btn btn-outline-info user-profile-btn mr-1"
                 >Edit User</button>
               </form>
             </div>
@@ -116,28 +118,24 @@
     aria-labelledby="library-tab"
   >
     <div class="d-flex">
-      <div class="card card-library">
+      <div class="card card-library card-book " style="width: 350px; height:500px;">
         <img
           src="/images/Pending.png"
           class="card-img-top"
           alt="Pending read image"
           style="margin: auto"
         />
-        <div class="card-body">
-          <!-- Estos se pueden añadir a los otros cards también si queréis poner algo más en la tarjeta
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">Some quick example text to build on the card
-            title and make up the bulk of the card's content.</p>
-            -->
+        <div class="card-body ">
           <form method="GET" action="/profile/pending">
             <button
-              class="btn btn-outline-info card-library-btn"
+              class="btn btn-primary card-library-btn"
+              style="align-item: center"
             >Pending</button>
           </form>
         </div>
       </div>
 
-      <div class="card card-library">
+      <div class="card card-library card-book" style="width: 350px; height:500px;">
         <img
           src="/images/Reading.png"
           class="card-img-top"
@@ -147,13 +145,13 @@
         <div class="card-body">
           <form method="GET" action="/profile/reading">
             <button
-              class="btn btn-outline-info card-library-btn"
+              class="btn btn-primary card-library-btn"
             >Reading</button>
           </form>
         </div>
       </div>
 
-      <div class="card card-library">
+      <div class="card card-library card-book" style="width: 350px; height:500px;">
         <img
           src="/images/Read.png"
           class="card-img-top"
@@ -163,7 +161,7 @@
         <div class="card-body">
           <form method="GET" action="/profile/read">
             <button
-              class="btn btn-outline-success card-library-btn"
+              class="btn btn-primary card-library-btn"
             >Read</button>
           </form>
         </div>

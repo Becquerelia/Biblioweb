@@ -71,3 +71,35 @@ h1 {
   width: 9rem;
   height: 9rem;
 }
+
+.header-blue{
+  background-color: #9ac9f8
+}
+
+.table-lightblue {
+  background-color: #d5f9f8;
+  
+}
+
+.card-book-container{
+  background-color: #dee3fb;
+}
+
+.card-book{
+  border: 3px solid black;
+  border-radius: 15px;
+}
+
+.card-profile{
+  border: 3px solid black;
+}
+
+.card-library {
+  align-items:center;
+  padding-top: 120px;
+}
+
+.card-library,
+.card-user-color{
+  background-color: #e9f5fb;
+}

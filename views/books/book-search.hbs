@@ -3,20 +3,18 @@
 {{/if}}
 
 <div class="signup-form">
-  <div class="card">
-    <h5 class="card-header">Search a book:</h5>
-    <div class="card-body">
+  <div class="card header-blue">
+    <h5 class="card-header" style="font-weight:bold">Search a book:</h5>
+    <div class="card-body table-lightblue">
       <form action="/books" method="POST">
 
-        <label class="form-label"  for="title">Title:</label>
+        <label class="form-label"  for="title" style="font-weight:bold">Title:</label>
         <input class="form-control" type="text" name="title"/>
 
-        <label class="form-label" for="author">Author:</label>
+        <label class="form-label" for="author" style="font-weight:bold">Author:</label>
         <input class="form-control" type="text" name="author" />
-        
-        <div class="alert alert-warning" role="alert">Please enter a title or an author for your search...</div>
 
-        <button class="btn btn-outline-success" name="submit">Search book</button>
+        <button class="btn btn-outline-primary" name="submit">Search book</button>
       </form>
     </div>
   </div>

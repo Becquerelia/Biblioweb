@@ -43,28 +43,30 @@
 
         <div class="col-md-3">
           {{#if user.profilePic}}
-          <img
-            class="img-fluid rounded-start profile-pic"
-            src="{{user.profilePic}}"
-            alt="{{user.username}} Profile-pic"
-          />
+            <img
+              class="img-fluid rounded-start profile-pic"
+              src="{{user.profilePic}}"
+              alt="{{user.username}} Profile-pic"
+            />
           {{else}}
-          <img
-            class="img-fluid rounded-start profile-pic"
-            src="/images/default-user-pic.png"
-            alt="{{user.username}} Profile-pic"
-          />
+            <img
+              class="img-fluid rounded-start profile-pic"
+              src="/images/default-user-pic.png"
+              alt="{{user.username}} Profile-pic"
+            />
           {{/if}}
 
           <!-- Button trigger modal -->
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-delete-user"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Delete User
-          </button>
+          {{#if isLoggedIn}}
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-delete-user"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Delete User
+            </button>
+          {{/if}}
         </div>
 
         <div class="col-md-9">
@@ -75,21 +77,23 @@
               little bit longer.</p>
             <p class="card-text"><small class="text-muted">Last updated 3 mins
                 ago</small></p>
-            <form
-              action="/profile/upload/profile-pic"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              <div class="d-flex">
-                <button class="btn btn-outline-success mr-1">Add profile pic</button>
-                <input
-                  type="file"
-                  name="image"
-                  class="btn btn-outline-success"
-                />
-              </div>
-            </form>
+            {{#if isLoggedIn}}
 
+              <form
+                action="/profile/upload/profile-pic"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <div class="d-flex">
+                  <button class="btn btn-outline-success mr-1">Add profile pic</button>
+                  <input
+                    type="file"
+                    name="image"
+                    class="btn btn-outline-success"
+                  />
+                </div>
+              </form>
+            {{/if}}
             <div class="d-flex">
               <form method="POST" action="/profile/edit">
                 <button

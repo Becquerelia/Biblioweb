@@ -42,11 +42,29 @@
       <div class="row g-0">
 
         <div class="col-md-3">
+          {{#if user.profilePic}}
           <img
-            class="img-fluid rounded-start"
+            class="img-fluid rounded-start profile-pic"
             src="{{user.profilePic}}"
             alt="{{user.username}} Profile-pic"
           />
+          {{else}}
+          <img
+            class="img-fluid rounded-start profile-pic"
+            src="/images/default-user-pic.png"
+            alt="{{user.username}} Profile-pic"
+          />
+          {{/if}}
+
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-delete-user"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Delete User
+          </button>
         </div>
 
         <div class="col-md-9">
@@ -74,8 +92,10 @@
 
             <div class="d-flex">
               <form method="POST" action="/profile/edit">
-                <button class="btn btn-outline-success user-profile-btn mr-1">Edit User</button>
-              </form>              
+                <button
+                  class="btn btn-outline-success user-profile-btn mr-1"
+                >Edit User</button>
+              </form>
             </div>
 
           </div>
@@ -148,31 +168,39 @@
   </div>
 </div>
 
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Delete User
-</button>
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Delete my User Account</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Are you sure? This action cannot be undone
       </div>
       <form method="POST" action="/profile/delete">
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No!</button>
-        
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >No!</button>
+
           <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
         </div>
-      </form>  
+      </form>
     </div>
   </div>
 </div>

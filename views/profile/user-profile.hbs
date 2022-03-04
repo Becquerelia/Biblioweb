@@ -2,7 +2,7 @@
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
 
-<h3>Welcome, {{user.username}}!</h3>
+<h3>Welcome{{#if isLoggedIn}}, {{user.username}} {{/if}}!</h3>
 
 <ul class="nav nav-tabs header-blue" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
@@ -74,13 +74,16 @@
         <div class="col-md-9">
           <div class="card-body">
             <h5 class="card-title" style="font-weight:bold">About Me</h5>
-            <p class="card-text">This is a wider card with supporting text below
-              as a natural lead-in to additional content. This content is a
-              little bit longer.</p>
+            <p class="card-text">This is my futureGraduatedIronhackerProfile and today, <strong>I am specially proud!</strong>
+              After a few days of intensive learning and teamworking, here you have a functioning app.
+              We know you may still find some bugs, but we are confident that with a little more time we can get everything
+              working perfectly smooth. And we also know that things can happen to even the biggest multinationals...
+              Here you have <a href="https://www.youtube.com/watch?v=05wVZyZJoDY" target="blank">a brief example... ;-)</a></p>
+              
             <p class="card-text"><small class="text-muted">Last updated 3 mins
                 ago</small></p>
-            {{#if isLoggedIn}}
 
+            {{#if isLoggedIn}}
               <form
                 action="/profile/upload/profile-pic"
                 method="POST"
@@ -95,7 +98,6 @@
                   />
                 </div>
               </form>
-            {{/if}}
             <div class="d-flex">
               <form method="POST" action="/profile/edit">
                 <button
@@ -103,6 +105,7 @@
                 >Edit User</button>
               </form>
             </div>
+            {{/if}}
 
           </div>
         </div>
@@ -118,12 +121,11 @@
     aria-labelledby="library-tab"
   >
     <div class="d-flex">
-      <div class="card card-library card-book " style="width: 350px; height:500px;">
+      <div class="card card-library card-book">
         <img
           src="/images/Pending.png"
           class="card-img-top"
           alt="Pending read image"
-          style="margin: auto"
         />
         <div class="card-body ">
           <form method="GET" action="/profile/pending">
@@ -135,12 +137,11 @@
         </div>
       </div>
 
-      <div class="card card-library card-book" style="width: 350px; height:500px;">
+      <div class="card card-library card-book">
         <img
           src="/images/Reading.png"
           class="card-img-top"
           alt="Reading image"
-          style="margin: auto"
         />
         <div class="card-body">
           <form method="GET" action="/profile/reading">
@@ -151,12 +152,11 @@
         </div>
       </div>
 
-      <div class="card card-library card-book" style="width: 350px; height:500px;">
+      <div class="card card-library card-book">
         <img
           src="/images/Read.png"
           class="card-img-top"
           alt="Read image"
-          style="margin: auto"
         />
         <div class="card-body">
           <form method="GET" action="/profile/read">

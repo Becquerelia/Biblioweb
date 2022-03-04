@@ -1,12 +1,10 @@
 const router = require("express").Router();
 const axios = require("axios");
 const BookModel = require("../models/Book.model.js");
-const isLoggedIn = require("../middlewares/isLoggedIn.js")
+const isLoggedIn = require("../middlewares/isLoggedIn.js");
 
 //! ADD BOOK TO PENDING LIST ROUTE:
-
 router.post("/:isbn/:title/pending", isLoggedIn, async (req, res, next) => {
-  
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({
@@ -16,16 +14,14 @@ router.post("/:isbn/:title/pending", isLoggedIn, async (req, res, next) => {
       status: "Pending",
       review: "",
     });
-    res.redirect("/books")
+    res.redirect("/books");
   } catch (err) {
     next(err);
   }
 });
 
 //! ADD BOOK TO READING LIST ROUTE:
-
 router.post("/:isbn/:title/reading", isLoggedIn, async (req, res, next) => {
- 
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({
@@ -35,16 +31,14 @@ router.post("/:isbn/:title/reading", isLoggedIn, async (req, res, next) => {
       status: "Reading",
       review: "",
     });
-    res.redirect("/books")
+    res.redirect("/books");
   } catch (err) {
     next(err);
   }
 });
 
 //! ADD BOOK TO READ LIST ROUTE:
-
 router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
-
   const { isbn, title } = req.params;
   try {
     const addPendingBook = await BookModel.create({
@@ -54,12 +48,10 @@ router.post("/:isbn/:title/read", isLoggedIn, async (req, res, next) => {
       status: "Read",
       review: "",
     });
-    res.redirect("/books")
+    res.redirect("/books");
   } catch (err) {
     next(err);
   }
 });
-
-
 
 module.exports = router;

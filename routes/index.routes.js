@@ -22,6 +22,4 @@ router.use("/my-books", myBooksRoutes)
 const otherUsersRoutes = require("./other-users.routes.js")
 router.use("/other-users", otherUsersRoutes)
 
-
-
 module.exports = router;

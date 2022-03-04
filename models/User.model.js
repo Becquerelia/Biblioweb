@@ -1,28 +1,26 @@
 const { Schema, model } = require("mongoose");
 
-
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true
+      required: true,
     },
 
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
     },
 
     password: {
       type: String,
-      required: true
-    },  
+      required: true,
+    },
 
     profilePic: {
-      type: String
-    }
-     
+      type: String,
+    },
   },
   {
     timestamps: true,
@@ -32,4 +30,3 @@ const userSchema = new Schema(
 const UserModel = model("User", userSchema);
 
 module.exports = UserModel;
-

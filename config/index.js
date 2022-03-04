@@ -18,8 +18,8 @@ const favicon = require("serve-favicon");
 const path = require("path");
 
 //Login packages:
-const session = require("express-session")
-const MongoStore = require("connect-mongo")
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 // Middleware configuration
 module.exports = (app) => {
@@ -39,20 +39,24 @@ module.exports = (app) => {
   app.use(express.static(path.join(__dirname, "..", "public")));
 
   // Handles access to the favicon
-  app.use(favicon(path.join(__dirname, "..", "public", "images", "favicon.ico")));
+  app.use(
+    favicon(path.join(__dirname, "..", "public", "images", "favicon.ico"))
+  );
 
-  //Access to Login/Logout:
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    rolling: true,
-    cookie:{
-      maxAge: 1000 * 60 * 60 * 24 
-    },
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/biblioweb",
-      ttl: 60 * 60 * 24 
-    }) 
-  }))
+  // Handles access to Login/Logout:
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      rolling: true,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+      },
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/biblioweb",
+        ttl: 60 * 60 * 24,
+      }),
+    })
+  );
 };

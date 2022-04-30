@@ -1,7 +1,6 @@
 {{#if errorMessage}}
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
-
 <div class="page-title">
   <h3>My Books Collection - Reading</h3>
 </div>
@@ -40,7 +39,11 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  Are you sure? This action cannot be undone
+                  <strong>Are you sure you want to delete this book? <br /><br /> TITLE: {{title}}</strong>
+                  <br />
+                  ID: ({{this._id}})
+                  <br /><br />
+                  <strong>THIS ACTION CANNOT BE UNDONE!</strong>
                 </div>
                 <form method="POST" action="/library/deleteBook/{{this._id}}">
                   <div class="modal-footer">
@@ -51,7 +54,6 @@
               </div>
             </div>
           </div>
-
         </td>
       </tr>
     {{/each}}

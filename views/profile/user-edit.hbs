@@ -1,3 +1,41 @@
 {{#if errorMessage}}
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
+
+<div class="signup-form">
+  <div class="card header-blue">
+    <h5 class="card-header" style="font-weight:bold">Editing {{editUser.username}}'s profile!</h5>
+    <div class="card-body bg-lightblue flex">
+      <div class="col-md-3">
+        {{#if editUser.profilePic}}
+          <img class="img-fluid rounded-start profile-pic" src="{{editUser.profilePic}}" alt="{{editUser.username}} Profile-pic" />
+        {{else}}
+          <img class="img-fluid rounded-start profile-pic" src="/images/default-user-pic.png" alt="{{editUser.username}} Profile-pic" />
+        {{/if}}
+      </div>
+      <div class="col-md-9">
+        <form method="POST" action="/profile/upload/profile-pic" enctype="multipart/form-data">
+        <label class="form-label"  for="username" style="font-weight:bold" />To add or change pic select file and then click "Add or change profile pic" button :</label>
+          <div class="d-flex">
+            <button class="btn btn-outline-info mr-1">Add or change profile pic</button>
+            <input type="file" name="image" class="btn btn-outline-info" />
+          </div>
+        </form>
+        <form method="POST" action="/profile/edit">
+
+          <label class="form-label"  for="username" style="font-weight:bold" />Username:</label>
+          <input class="form-control" type="text" name="username" value="{{editUser.username}}" />
+
+          <label class="form-label" for="email" style="font-weight:bold" />E-mail:</label>
+          <input class="form-control" type="text" name="email" value="{{editUser.email}}" />
+
+          <label class="form-label" for="about" style="font-weight:bold">About me:</label>
+          <textarea class="form-control" name="about" rows="5" />{{editUser.about}}</textarea>
+
+          <button type="submit" class="btn btn-outline-primary" name="submit">Update profile</button>
+          <a href="/profile/edit"><button class="btn btn-outline-secondary">Cancel</button></a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

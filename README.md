@@ -1,7 +1,7 @@
 ## LIBRARYWEB
 
 ## Description
-Platform for a comunity of book readers that want to engage with other people that love reading too. Libraryweb allows the user to search a book from a Google's Book DB API ( by the way, thanks Google for your documentation) and check its details, such as title, authors, description. The user can add books, to his personal collections (Pending, Reading and Read), and manage the reading status of them. The user is also allowed to search other users by their names and check the books they have on their collections as their status.
+Platform for a comunity of book readers that want to engage with other people that love reading too. Libraryweb allows the user to search a book from a Google's Book DB API ( by the way, thanks Google for your documentation) and check its details, such as title, authors, description. The user can add books, to his personal collections (pending, reading and read), and manage the reading status of them. The user is also allowed to search other users by their names and check the books they have on their collections as their status.
 
 ## User stories
 - 404 - As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault.
@@ -17,8 +17,8 @@ Platform for a comunity of book readers that want to engage with other people th
 - user-search - As a user I want to search other people and be able of have a look at their collections, and also the status of the books.
 
 ## Models
-- BookModel new Schema ({apiISBN: String, title: String, ownerID: { type: mongoose.Schema.Types.ObjectId, ref: "User"}, status: {type: String, enum: ["Pending", "Reading", "Read"]}, review: String,})   
-- UserModel new Schema({username: {type: String, required: true}, email: {type: String, unique: true, required: true}, password: {type: String, required: true}, profilePic: {type: String}}, {timestamps: true,});
+- BookModel new Schema ({apiID: String, title: String, ownerID: { type: mongoose.Schema.Types.ObjectId, ref: "User"}, status: {type: String, enum: ["pending", "reading", "read"]}, review: String,})   
+- UserModel new Schema({username: {type: String, required: true}, email: {type: String, unique: true, required: true}, password: {type: String, required: true}, profilePic: {type: String}}, about: {type: String}}, {timestamps: true,});
 
 
 ## Backlog

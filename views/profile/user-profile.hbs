@@ -2,203 +2,53 @@
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
 
-<h3>Welcome{{#if isLoggedIn}}, {{user.username}} {{/if}}!</h3>
+<div class="page-title">
+  <h3>Welcome{{#if isLoggedIn}}, {{user.username}} {{/if}}!</h3>
+</div>
 
-<ul class="nav nav-tabs header-blue" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button
-      class="nav-link active"
-      id="profile-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#profile"
-      type="button"
-      role="tab"
-      aria-controls="profile"
-      aria-selected="true"
-      style="font-weight:bold"
-    >Profile</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button
-      class="nav-link"
-      id="library-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#library"
-      type="button"
-      role="tab"
-      aria-controls="library"
-      aria-selected="false"
-      style="font-weight:bold"
-    >Library</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-
-  <div
-    class="tab-pane fade show active"
-    id="profile"
-    role="tabpanel"
-    aria-labelledby="profile-tab"
-  >
     <div class="card mb-3 card-user-detail card-profile" style="max-width: 800px;">
       <div class="row g-0 card-user-color">
-
         <div class="col-md-3">
           {{#if user.profilePic}}
-            <img
-              class="img-fluid rounded-start profile-pic"
-              src="{{user.profilePic}}"
-              alt="{{user.username}} Profile-pic"
-            />
+            <img class="img-fluid rounded-start profile-pic" src="{{user.profilePic}}" alt="{{user.username}} Profile-pic" />
           {{else}}
-            <img
-              class="img-fluid rounded-start profile-pic"
-              src="/images/default-user-pic.png"
-              alt="{{user.username}} Profile-pic"
-            />
-          {{/if}}
-
-          <!-- Button trigger modal -->
-          {{#if isLoggedIn}}
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-delete-user"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              Delete User
-            </button>
+            <img class="img-fluid rounded-start profile-pic" src="/images/default-user-pic.png" alt="{{user.username}} Profile-pic" />
           {{/if}}
         </div>
-
         <div class="col-md-9">
           <div class="card-body">
             <h5 class="card-title" style="font-weight:bold">About Me</h5>
-            <p class="card-text">This is my futureGraduatedIronhackerProfile and today, <strong>I am specially proud!</strong>
-              After a few days of intensive learning and teamworking, here you have a functioning app.
-              We know you may still find some bugs, but we are confident that with a little more time we can get everything
-              working perfectly smooth. And we also know that things can happen to even the biggest multinationals...
-              Here you have <a href="https://www.youtube.com/watch?v=05wVZyZJoDY" target="blank">a brief example... ;-)</a></p>
-              
-            <p class="card-text"><small class="text-muted">Last updated 3 mins
-                ago</small></p>
-
+            <p class="card-text">{{{user.about}}}</p>
+            <p class="card-text"><small class="text-muted">Last updated {{user.updatedAt}}</small></p>
             {{#if isLoggedIn}}
-              <form
-                action="/profile/upload/profile-pic"
-                method="POST"
-                enctype="multipart/form-data"
-              >
-                <div class="d-flex">
-                  <button class="btn btn-outline-info mr-1">Add profile pic</button>
-                  <input
-                    type="file"
-                    name="image"
-                    class="btn btn-outline-info"
-                  />
-                </div>
-              </form>
-            <div class="d-flex">
-              <form method="POST" action="/profile/edit">
-                <button
-                  class="btn btn-outline-info user-profile-btn mr-1"
-                >Edit User</button>
-              </form>
-            </div>
+              <div class="d-flex">
+                <form method="GET" action="/profile/edit">
+                  <button class="btn btn-outline-info btn-user-edit mr-1">Edit User</button>
+                </form>
+                <button type="button" class="btn btn-outline-danger btn-user-delete" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Delete My Profile
+                </button>
+              </div>
             {{/if}}
-
           </div>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <div
-    class="tab-pane fade"
-    id="library"
-    role="tabpanel"
-    aria-labelledby="library-tab"
-  >
-    <div class="d-flex">
-      <div class="card card-library card-book">
-        <img
-          src="/images/Pending.png"
-          class="card-img-top"
-          alt="Pending read image"
-        />
-        <div class="card-body ">
-          <form method="GET" action="/profile/pending">
-            <button
-              class="btn btn-primary card-library-btn"
-              style="align-item: center"
-            >Pending</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="card card-library card-book">
-        <img
-          src="/images/Reading.png"
-          class="card-img-top"
-          alt="Reading image"
-        />
-        <div class="card-body">
-          <form method="GET" action="/profile/reading">
-            <button
-              class="btn btn-primary card-library-btn"
-            >Reading</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="card card-library card-book">
-        <img
-          src="/images/Read.png"
-          class="card-img-top"
-          alt="Read image"
-        />
-        <div class="card-body">
-          <form method="GET" action="/profile/read">
-            <button
-              class="btn btn-primary card-library-btn"
-            >Read</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Delete my User Account</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        Are you sure? This action cannot be undone
+      <div class="modal-body danger">
+        <span>Are you sure? All your saved data, including your book library will be deleted without any chance to recover it!</span>
       </div>
       <form method="POST" action="/profile/delete">
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >No!</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No!</button>
 
           <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
         </div>

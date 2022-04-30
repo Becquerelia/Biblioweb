@@ -4,6 +4,7 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
+      unique: true,
       required: true,
     },
 
@@ -19,6 +20,10 @@ const userSchema = new Schema(
     },
 
     profilePic: {
+      type: String,
+    },
+
+    about: {
       type: String,
     },
   },

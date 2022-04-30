@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-  apiISBN: String,
+  apiID: String,
   title: String,
+  coverLink:String,
   ownerID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   status: {
     type: String,
-    enum: ["Pending", "Reading", "Read"],
+    enum: ["pending", "reading", "read"],
   },
   review: String,
 });

@@ -1,113 +1,53 @@
+// import needed modules
 const router = require("express").Router();
-const UserModel = require("../models/User.model.js")
-const bcrypt = require("bcryptjs");
+const UserModel = require("../models/User.model.js");
+const BookModel = require("../models/Book.model.js");
 
+//! GET ROUTE - ALL USERS
+router.get("/", async (req, res, next) => {
+  try {
+    const foundUser = await UserModel.find().sort({username:1});
+    res.render("users/users.hbs", { foundUser });
+  } catch (err) {
+    next(err);
+  }
+});
 
-//! SIGN-UP GET ROUTE
+//! GET ROUTE - VIEW OTHER USERS BY ID
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const foundUser = await UserModel.findById(id);
+    const bookList = await BookModel.find({ ownerID: id }).sort({title:1});
+    res.render("users/user-profile.hbs", { foundUser, bookList });
+  } catch (err) {
+    next(err);
+  }
+});
 
-router.get("/signup", (req, res, next) => {
-    res.render("auth/signup.hbs")
-} )
+//! POST ROUTE - SEARCH USERS
+router.post("/", async (req, res, next) => {
+  const { searchUsername } = req.body;
 
-//! SIGN-UP POST ROUTE
-
-router.post("/signup", async (req, res, next) => {
-    const {username, email, password} = req.body
-
-    // Validation:
-
-    if ( !username || !email || !password) {
-        res.render("auth/signup.hbs", {
-           errorMessage: "You should fill up all fields"
-        })
-        return;
-    }
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/;
-  if (!passwordRegex.test(password)) {
-    res.render("auth/signup.hbs", {
-      errorMessage:
-        "Must contain between 8 and 15 characters, a number, a special character, upper and lower cases",
+  if (searchUsername.length < 2) {
+    res.render("users/user-list.hbs", {
+      errorMessage: "Please type at least two letters in the user searching field ",
     });
     return;
-  }   
-  
+  }
   try {
-    const foundUser = await UserModel.findOne({email})
-        if (foundUser) {
-        res.render("auth/signup.hbs", {
-            errorMessage:
-              "This email is already registered",
-          });
-          return; 
+    const userRegex = new RegExp(searchUsername, "ig");
+    const searchedUser = await UserModel.find({ username: userRegex });
+    if (searchedUser.length === 0) {
+      res.render("users/user-list.hbs", {
+        errorMessage: "There are no users with this username ",
+      });
+      return;
     }
-  
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+    res.render("users/user-list.hbs", { searchedUser });
+  } catch (err) {
+    next(err);
+  }
+});
 
-  // User Creation:
-
-  await UserModel.create({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  res.redirect("/user/login");
- }
- catch (err) {
-    next(err)
- }
-
-})
-
-//! LOGIN GET ROUTE
-
-router.get("/login", (req, res, next) => {
-    res.render("auth/login.hbs")
-})
-
-//! LOGIN POST ROUTE
-
-router.post("/login", async (req, res, next) => {
-    const {username, password} = req.body
-
-    if(!username || !password){
-        res.render("auth/login.hbs", {
-            errorMessage: "Please fill all fields"
-        })
-        return;
-    }
-    try{
-        const foundUser = await UserModel.findOne({ username });
-
-    if (!foundUser) {
-        res.render("auth/login.hbs", {
-            errorMessage: "User not registered",
-          });
-          return;
-    }
-        const passwordMatch= await bcrypt.compare(password, foundUser.password)
-
-        if(!passwordMatch) {
-            res.render("auth/login.hbs", {
-                errorMessage: "Wrong password",
-            })
-            return;
-        }
-        req.session.user = foundUser
-        req.app.locals.isLoggedIn = true
-        res.redirect("/profile")
-    }
-    catch (err) {
-        next(err)
-    }
-})
-
-//! LOGOUT GET ROUTE
-router.get("/logout", (req, res, next) => {
-    req.session.destroy()
-    req.app.locals.isLoggedIn = false
-    res.redirect("/")
-})
-
-module.exports = router
+module.exports = router;

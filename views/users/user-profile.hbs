@@ -1,0 +1,49 @@
+{{#if errorMessage}}
+  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+{{/if}}
+
+{{#if bookList}}
+  <div class="page-title">
+    <h2>{{foundUser.username}}'s Book Collection</h2>
+    <div class="user-collection_legend">
+      <span><img src="/images/default-book.jpg" alt="image book without cover" width="25px" />
+        Book without cover</span>&nbsp;
+      <span><img src="../images/pending.png" alt="pending book icon" width="25px" />
+        Pending read book</span>&nbsp;
+      <span><img src="../images/reading.png" alt="reading book icon" width="25px" />
+        Reading book</span>&nbsp;
+      <span><img src="../images/read.png" alt="read book icon" width="25px" />
+        Read book</span>
+    </div>
+
+  </div>
+
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr style="background-color: lightgray">
+        <th scope="col" width="50px">Cover</th>
+        <th scope="col" width="50px">Status</th>
+        <th scope="col">Book title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each bookList}}
+        <tr class="align-middle">
+          <td>
+            {{#if coverLink}}
+              <img src="{{coverLink}}" alt="book cover" width="50px" />
+            {{else}}
+              <img src="/images/default-book.jpg" alt="book cover" width="50px" />
+            {{/if}}
+          </td>
+          <td><img src="../images/{{status}}.png" alt="{{status}} icon" width="50px" /></td>
+        <td><a href="/books/details/{{apiID}}">{{title}}</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <div class="page-title">
+    <h2>Oh, {{foundUser.username}}'s Book Collection is empty :-(</h2>
+  </div>
+{{/if}}

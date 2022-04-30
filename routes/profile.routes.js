@@ -1,16 +1,12 @@
+// import needed modules
 const router = require("express").Router();
 const UserModel = require("../models/User.model.js");
-const BookModel = require("../models/Book.model.js");
 const isLoggedIn = require("../middlewares/isLoggedIn.js");
-const { default: axios } = require("axios");
-const { Router } = require("express");
-const async = require("hbs/lib/async");
 const uploader = require("../middlewares/uploader.js");
 
-//! PRIVATE PROFILE ROUTE:
+//! GET USER PROFILE ROUTE
 router.get("/", isLoggedIn, (req, res, next) => {
   UserModel.findById(req.session.user._id)
-
     .then((user) => {
       res.render("profile/user-profile.hbs", { user });
     })
@@ -19,124 +15,99 @@ router.get("/", isLoggedIn, (req, res, next) => {
     });
 });
 
-//! UPDATE PROFILE PICTURE
-router.post(
-  "/upload/profile-pic",
-  uploader.single("image"),
-  (req, res, next) => {
-    const { image } = req.body;
+//! GET USER PROFILE EDIT ROUTE
+router.get("/edit", isLoggedIn, async (req, res, next) => {
+  try {
+    const editUser = await UserModel.findById(req.session.user._id);
+    res.render("profile/user-edit", { editUser });
+  } catch (err) {
+    next(err);
+  }
+});
 
-    if (!req.file) {
-      res.render("profile/user-profile.hbs", {
-        errorMessage: "Please select a picture",
+//! POST USER PROFILE EDIT ROUTE
+router.post("/edit", isLoggedIn, async (req, res, next) => {
+  const id = req.session.user._id;
+
+  const { username, email, about } = req.body;
+  const editUser = { username, email, about };
+
+  const loggedUserProfileInfo = await UserModel.findById(id);
+  const loggedUserProfileUsername = loggedUserProfileInfo.username;
+  const loggedUserProfileEmail = loggedUserProfileInfo.email;
+
+  try {
+    //* BACKEND VALIDATIONS
+
+    // Check if both mandatory fields are filled
+    if (!username || !email) {
+      res.render("profile/user-edit", {
+        editUser,
+        errorMessage: "Username and email are mandatory! Please fill them both!",
       });
       return;
     }
 
-    UserModel.findByIdAndUpdate(req.session.user._id, {
-      profilePic: req.file.path,
+    // Check if the new username provided by the user has already been registered
+    if (username !== loggedUserProfileUsername) {
+      const usernameRegistered = await UserModel.findOne({ username });
+
+      if (usernameRegistered) {
+        res.render("profile/user-edit", {
+          editUser,
+          errorMessage: "This username have already been registered!",
+        });
+        return;
+      }
+    }
+
+    // Check if the new email provided by the user has already been registered
+    if (email !== loggedUserProfileEmail) {
+      const emailRegistered = await UserModel.findOne({ email });
+
+      if (emailRegistered) {
+        res.render("profile/user-edit", {
+          editUser,
+          errorMessage: "This email have already been registered!",
+        });
+        return;
+      }
+    }
+
+    // If all verifications are ok, update user info
+    await UserModel.findByIdAndUpdate(req.session.user._id, {
+      username,
+      email,
+      about,
+    });
+
+    // redirect user to profile view page
+    res.redirect(`/profile`);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//! POST USER PROFILE UPDATE PICTURE ROUTE
+router.post("/upload/profile-pic", isLoggedIn, uploader.single("image"), async (req, res, next) => {
+  if (!req.file) {
+    const editUser = await UserModel.findById(req.session.user._id);
+    res.render("profile/user-edit", {
+      editUser,
+      errorMessage: `No picture selected. Please, first choose a picture and after click "Add or change profile pic" button!`,
+    });
+    return;
+  }
+
+  UserModel.findByIdAndUpdate(req.session.user._id, {
+    profilePic: req.file.path,
+  })
+    .then(() => {
+      res.redirect(`/profile/edit`);
     })
-      .then(() => {
-        res.redirect("/profile");
-      })
-      .catch((err) => {
-        next(err);
-      });
-  }
-);
-
-//! PROFILE/COLLECTIONS CREATE ROUTES:
-router.get("/pending", isLoggedIn, async (req, res, next) => {
-  const { _id } = req.session.user;
-  try {
-    const findBooks = await BookModel.find({ status: "Pending", ownerID: _id });
-    res.render("profile/pending.hbs", { findBooks });
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/reading", isLoggedIn, async (req, res, next) => {
-  const { _id } = req.session.user;
-  try {
-    const findBooks = await BookModel.find({ status: "Reading", ownerID: _id });
-    res.render("profile/reading.hbs", { findBooks });
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/read", isLoggedIn, async (req, res, next) => {
-  const { _id } = req.session.user;
-  try {
-    const findBooks = await BookModel.find({ status: "Read", ownerID: _id });
-    res.render("profile/read.hbs", { findBooks });
-  } catch (err) {
-    next(err);
-  }
-});
-
-//! UPDATE STATUS ROUTE
-router.post("/:idBook/editToReading", async (req, res, next) => {
-  const { idBook } = req.params;
-  try {
-    const editBook = await BookModel.findByIdAndUpdate(idBook, {
-      status: "Reading",
+    .catch((err) => {
+      next(err);
     });
-    res.redirect("/profile/reading");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/:idBook/editToRead", async (req, res, next) => {
-  const { idBook } = req.params;
-  try {
-    const editBook = await BookModel.findByIdAndUpdate(idBook, {
-      status: "Read",
-    });
-    res.redirect("/profile/read");
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post("/:idBook/editToPending", async (req, res, next) => {
-  const { idBook } = req.params;
-  try {
-    const editBook = await BookModel.findByIdAndUpdate(idBook, {
-      status: "Pending",
-    });
-
-    res.redirect("/profile/pending");
-  } catch (err) {
-    next(err);
-  }
-});
-
-//! deleteBook ROUTE
-router.post("/:idBook/deleteBook", async (req, res, next) => {
-  const { idBook } = req.params;
-  try {
-    const deleteBook = await BookModel.findByIdAndDelete(idBook);
-    res.redirect("/profile");
-  } catch (err) {
-    next(err);
-  }
-});
-
-//! DELETE USER ROUTE:
-
-router.post("/delete", async (req, res, next) => {
-  try {
-    await BookModel.deleteMany({ ownerID: req.session.user._id });
-    await UserModel.findByIdAndDelete(req.session.user._id);
-    req.session.destroy();
-    req.app.locals.isLoggedIn = false;
-    res.redirect("/");
-  } catch (err) {
-    next(err);
-  }
 });
 
 module.exports = router;

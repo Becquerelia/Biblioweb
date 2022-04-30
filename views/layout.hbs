@@ -50,16 +50,24 @@
                 <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/books">Books</a>
+                <a class="nav-link" href="/users">Users</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/books">Search books</a>
+              </li>
+            {{#if isLoggedIn}}
+              <li class="nav-item">
+                <a class="nav-link" href="/library">My Library</a>
+              </li>
+            {{/if}}
             </ul>
             {{#if isLoggedIn}}
-            <form method="POST" action="/other-users" class="navbar-nav right">
+            <form method="POST" action="/users" class="navbar-nav right">
               <input
                 class="form-control me-2"
                 name="searchUsername"
                 type="search"
-                placeholder="Search username"
+                placeholder="Search user"
                 aria-label="Search"
               />
               <button
@@ -72,16 +80,16 @@
                   <a class="nav-link" href="/profile">Profile</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/logout">Logout</a>
+                  <a class="nav-link" href="/auth/logout">Logout</a>
                 </li>
               </ul>
             {{else}}
               <ul class="navbar-nav right">
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/login">Login</a>
+                  <a class="nav-link" href="/auth/login">Login</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/signup">Sign-up</a>
+                  <a class="nav-link" href="/auth/signup">Sign-up</a>
                 </li>
               </ul>
             {{/if}}
@@ -104,7 +112,6 @@
     ></script>
 
     {{! project scripts core page }}
-    <script src="/js/script.js"></script>
+    <script src="/js/modal.js"></script>
   </body>
-
 </html>

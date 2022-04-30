@@ -1,13 +1,14 @@
+// import needed modules
 const router = require("express").Router();
 const axios = require("axios");
-const BookModel = require("../models/Book.model.js");
+const { getBookInfoFromGoogleApiById, plainTextSearch } = require("../utils/basic-functions.js");
 
-//! SEARCH BOOK GET ROUTE:
+//! GET ROUTE - SEARCH BOOK
 router.get("/", async (req, res, next) => {
   res.render("books/book-search.hbs");
 });
 
-//! SEARCH BOOK POST ROUTE (RESULTS):
+//! POST ROUTE - SEARCH BOOK (RESULTS):
 router.post("/", async (req, res, next) => {
   const { title, author } = req.body;
 
@@ -23,17 +24,11 @@ router.post("/", async (req, res, next) => {
     // calls API with different params
     let bookFromAPI;
     if (!title) {
-      bookFromAPI = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=inauthor:"${author}"&key=${process.env.APIKEY}`
-      );
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=inauthor:"${plainTextSearch(author)}"&key=${process.env.APIKEY}`);
     } else if (!author) {
-      bookFromAPI = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"`
-      );
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${plainTextSearch(title)}"&key=${process.env.APIKEY}`);
     } else {
-      bookFromAPI = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:"${title}"+inauthor:"${author}"&key=${process.env.APIKEY}`
-      );
+      bookFromAPI = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:"${plainTextSearch(title)}"+inauthor:"${plainTextSearch(author)}"&key=${process.env.APIKEY}`);
     }
 
     // returns feedback to user if there are no results
@@ -44,41 +39,19 @@ router.post("/", async (req, res, next) => {
       });
       return;
     }
-
-    // filters results and display only the ones with cover and ISBN
-    const filteredSearch = mySearch.filter((eachResult) => {
-      const haveCoverImage = eachResult.volumeInfo.imageLinks;
-      const apiISBN = eachResult.volumeInfo.industryIdentifiers[0].identifier;
-      if (haveCoverImage !== undefined && apiISBN !== undefined) {
-        return true;
-      }
-    });
-
-    // render a page if after filtering there are no results to show
-    // someone will remember how tricky was dealing with this error ;-)
-    if (filteredSearch.length > 0) {
-      res.render("books/book-result.hbs", { filteredSearch });
-    } else {
-      res.render("books/book-search.hbs", {
-        errorMessage:
-          "There are no results with your search criteria and our filter policy. Please try again with different parameters.",
-      });
-      return;
-    }
+    res.render("books/book-result.hbs", { mySearch });
   } catch (err) {
     next(err);
   }
 });
 
-//! BOOK DETAIL GET ROUTE:
-router.get("/:isbn/details", async (req, res, next) => {
-  const { isbn } = req.params;
+//! GET ROUTE - BOOK DETAIL GET ROUTE:
+router.get("/details/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const oneBook = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&=${process.env.APIKEY}`
-    );
-
-    const oneBookDetails = oneBook.data.items;
+    // calls getBookInfoFromGoogleApiById function from basic-functions.js
+    // to retrieve needed book info
+    const oneBookDetails = await getBookInfoFromGoogleApiById(id);
     res.render("books/book-detail.hbs", { oneBookDetails });
   } catch (err) {
     next(err);

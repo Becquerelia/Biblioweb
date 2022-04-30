@@ -5,53 +5,57 @@
 <div class="card card-detail mb-3 card-book">
   <div class="row g-0">
     <div class="col-2">
-      <img
-        src="{{oneBookDetails.0.volumeInfo.imageLinks.smallThumbnail}}"
-        class="img-fluid rounded-start"
-        alt="{{oneBookDetails.0.volumeInfo.imageLinks.smallThumbnail}} cover image"
-      />
+      {{#if oneBookDetails.imageLinks.thumbnail}}
+        <img src="{{oneBookDetails.imageLinks.thumbnail}}" class="img-fluid rounded-start" alt="{{oneBookDetails.title}}'s cover" />
+      {{else}}
+        <img src="/images/default-book.jpg" class="img-fluid rounded-start" alt="default cover" />
+      {{/if}}
     </div>
     <div class="col-10">
       <div class="card-body">
-        <h5 class="card-title" style="font-weight:bold">{{oneBookDetails.0.volumeInfo.title}}</h5>
-        <p class="card-text"><small
-            class="text-muted"
-          >{{oneBookDetails.0.volumeInfo.categories}}</small></p>
+        <h5 class="card-title" style="font-weight:bold">{{oneBookDetails.title}}</h5>
         <div class="d-flex">
-          <div style="font-weight:bold">Authors</div>
-          <ul>
-            {{#each oneBookDetails.0.volumeInfo.authors}}
-              <li>{{this}}</li>
-            {{/each}}
-          </ul>
+          {{#if oneBookDetails.authors}}
+            <div style="font-weight:bold">Authors</div>
+            <ul>
+              {{#each oneBookDetails.authors}}
+                <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          {{/if}}
         </div>
-        <p class="card-text">{{oneBookDetails.0.volumeInfo.description}}</p>
+        <p class="card-text">
+          <small class="text-muted">
+            Gogle ID:
+            {{oneBookDetails.id}}<br />
+            {{#if oneBookDetails.publishedDate}}
+              Published date:
+              {{oneBookDetails.publishedDate}}<br />
+            {{/if}}
+            {{#if oneBookDetails.categories}}
+              Categories:
+              {{oneBookDetails.categories}}<br />
+            {{/if}}
+          </small>
+        </p>
+        {{#if oneBookDetails.description}}
+          <div style="font-weight:bold">Description</div>
+          <p class="card-text">
+            {{{oneBookDetails.description}}}</p>
+        {{/if}}
         {{#if isLoggedIn}}
           <div class="d-flex">
-            <form
-              method="POST"
-              action="/my-books/{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/{{oneBookDetails.0.volumeInfo.title}}/pending"
-            >
-              <button class="btn btn-outline-success card-detail-btn">Add to
-                pending read</button>
+            <form method="POST" action="/library/pending/{{oneBookDetails.id}}">
+              <button class="btn btn-outline-success card-detail-btn">Add to pending read</button>
             </form>
-            <form
-              method="POST"
-              action="/my-books/{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/{{oneBookDetails.0.volumeInfo.title}}/reading"
-            >
-              <button
-                class="btn btn-outline-success card-detail-btn"
-              >Add to reading</button>
+            <form method="POST" action="/library/reading/{{oneBookDetails.id}}">
+              <button class="btn btn-outline-success card-detail-btn">Add to reading</button>
             </form>
-            <form
-              method="POST"
-              action="/my-books/{{oneBookDetails.0.volumeInfo.industryIdentifiers.0.identifier}}/{{oneBookDetails.0.volumeInfo.title}}/read"
-            >
+            <form method="POST" action="/library/read/{{oneBookDetails.id}}">
               <button class="btn btn-outline-success card-detail-btn">Add to already read</button>
             </form>
           </div>
         {{/if}}
-
       </div>
     </div>
   </div>

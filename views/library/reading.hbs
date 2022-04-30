@@ -1,0 +1,68 @@
+{{#if errorMessage}}
+  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+{{/if}}
+
+<div class="page-title">
+  <h3>My Books Collection - Reading</h3>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr style="background-color: lightblue">
+      <th scope="col" width="30px">Cover</th>
+      <th scope="col">Book title</th>
+      <th scope="col" width="100px"></th>
+      <th scope="col" width="100px"></th>
+      <th scope="col" width="100px"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each findBooks}}
+      <tr class="align-middle">
+        <td>
+          {{#if coverLink}}
+            <img src="{{coverLink}}" alt="book cover" width="30px" />
+          {{else}}
+            <img src="/images/default-book.jpg" alt="book cover" width="30px" />
+          {{/if}}
+        </td>
+        <td><a href="/books/details/{{apiID}}">{{title}}</a></td>
+        <form method="POST" action="/library/moveToPending/{{this._id}}"><td><button class="btn btn-outline-info" style="width:90px">Pending</button></td></form>
+        <form method="POST" action="/library/moveToRead/{{this._id}}"><td><button class="btn btn-outline-info" style="width:90px">Read</button></td></form>
+        <td>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-danger btn-delete-book" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:90px">Delete</button>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Delete this book</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure? This action cannot be undone
+                </div>
+                <form method="POST" action="/library/deleteBook/{{this._id}}">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No!</button>
+                    <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class="flex">
+  <a href="/profile"><button class="btn btn-primary card-library-btn">My profile</button></a>
+  <form method="GET" action="/library/pending">
+    <button class="btn btn-primary card-library-btn" style="align-item: center">View Pending</button>
+  </form>
+  <form method="GET" action="/library/read">
+    <button class="btn btn-primary card-library-btn">View Read</button>
+  </form>
+</div>

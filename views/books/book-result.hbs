@@ -1,16 +1,21 @@
 {{#if errorMessage}}
   <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
 {{/if}}
+
 <div class="container">
   <div class="row row-cols-auto card-book-container">
-    {{#each filteredSearch}}
+    {{#each mySearch}}
       <div class="col">
         <div class="card card-list p-2 card-book">
+          {{#if volumeInfo.imageLinks.smallThumbnail}}
           <img src="{{volumeInfo.imageLinks.smallThumbnail}}" class="card-img-top" alt="{{volumeInfo.title}} cover" width="20rem" height="200rem"/>
+          {{else}}
+          <img src="images/default-book.jpg" class="card-img-top" alt="{{volumeInfo.title}} cover" width="20rem" height="200rem"/>
+          {{/if}}
           <div class="card-body">
             <h5 class="card-title"></h5>
             <p class="card-text p-0" style="font-weight:bold">{{volumeInfo.title}}</p>
-            <a href="/books/{{volumeInfo.industryIdentifiers.0.identifier}}/details" class="btn btn-sm btn-outline-primary">More details</a>
+            <a href="/books/details/{{id}}" class="btn btn-sm btn-outline-primary">More details</a>
           </div>
         </div>
       </div>

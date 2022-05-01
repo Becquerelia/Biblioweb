@@ -26,6 +26,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //! POST ROUTE - SEARCH USERS
+//
 router.post("/", async (req, res, next) => {
   const { searchUsername } = req.body;
 

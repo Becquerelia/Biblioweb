@@ -47,7 +47,12 @@ router.post("/moveToReading/:idBook", isLoggedIn, async (req, res, next) => {
     await BookModel.findByIdAndUpdate(idBook, {
       status: "reading",
     });
-    res.redirect("/library/reading");
+
+    // redirects to the category where the book was moved 
+    // res.redirect("/library/reading");
+
+    // redirects back to the page from where the query was made
+    res.redirect("back");
   } catch (err) {
     next(err);
   }
@@ -59,7 +64,12 @@ router.post("/moveToRead/:idBook", isLoggedIn, async (req, res, next) => {
     await BookModel.findByIdAndUpdate(idBook, {
       status: "read",
     });
+
+    // redirects to the category where the book was moved 
     res.redirect("/library/read");
+
+    // redirects back to the page from where the query was made
+    res.redirect("back");
   } catch (err) {
     next(err);
   }
@@ -72,7 +82,11 @@ router.post("/moveToPending/:idBook", isLoggedIn, async (req, res, next) => {
       status: "pending",
     });
 
-    res.redirect("/library/pending");
+    // redirects to the category where the book was moved 
+    // res.redirect("/library/pending");
+
+    // redirects back to the page from where the query was made
+    res.redirect("back");
   } catch (err) {
     next(err);
   }
@@ -81,13 +95,18 @@ router.post("/moveToPending/:idBook", isLoggedIn, async (req, res, next) => {
 //! POST ROUTE - DELETE BOOK
 router.post("/deleteBook/:idBook", isLoggedIn, async (req, res, next) => {
   const { idBook } = req.params;
-  console.log(idBook);
   try {
     await BookModel.findByIdAndDelete(idBook);
-    res.redirect("/library");
+
+    // redirects back to user's library
+    // res.redirect("/library");
+
+    // redirects back to the page from where the query was made
+    res.redirect("back");
   } catch (err) {
     next(err);
   }
+
 });
 
 //! POST ROUTE - ADD BOOK TO USER'S LIST
@@ -128,7 +147,11 @@ router.post("/:status/:id", isLoggedIn, async (req, res, next) => {
       status: readingStatus,
       review: "",
     });
-    res.redirect("/books");
+    // redirects back to search book page
+    res.redirect("back");
+
+    // redirects back to the page from where the query was made
+    // res.redirect(req.rawHeaders[31]);
     return;
   } catch (err) {
     next(err);

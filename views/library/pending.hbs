@@ -8,9 +8,8 @@
   <thead>
     <tr style="background-color: lightblue">
       <th scope="col" width="30px">Cover</th>
-      <th scope="col">Book title</th>
-      <th scope="col" width="100px"></th>
-      <th scope="col" width="100px"></th>
+      <th scope="col" width="100%" >Book title</th>
+      <th scope="col" width="100px" colspan="2" style="text-align: center;">Move to:</th>
       <th scope="col" width="100px"></th>
     </tr>
   </thead>
@@ -27,33 +26,10 @@
         <td><a href="/books/details/{{apiID}}">{{title}}</a></td>
         <form method="POST" action="/library/moveToReading/{{this._id}}"><td><button class="btn btn-outline-info" style="width:90px">Reading</button></td></form>
         <form method="POST" action="/library/moveToRead/{{this._id}}"><td><button class="btn btn-outline-info" style="width:90px">Read</button></td></form>
+        <form method="POST" action="/library/deleteBook/{{this._id}}"><td><button class="btn btn-outline-danger" style="width:90px">Delete</button></td></form>
         <td>
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-outline-danger btn-delete-book" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:90px">Delete</button>
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delete book</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <strong>Are you sure you want to delete this book? <br /><br /> TITLE: {{title}}</strong>
-                  <br />
-                  ID: ({{this._id}})
-                  <br /><br />
-                  <strong>THIS ACTION CANNOT BE UNDONE!</strong>
-                </div>
-                <form method="POST" action="/library/deleteBook/{{this._id}}">
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No!</button>
-                    <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+          <button type="button" class="btn btn-outline-danger btn-delete-book" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width:250px">Delete ID: {{this._id}}</button>
         </td>
       </tr>
     {{/each}}
@@ -67,4 +43,29 @@
   <form method="GET" action="/library/read">
     <button class="btn btn-primary card-library-btn">View Read</button>
   </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <strong>Are you sure you want to delete this book? <br /><br /> TITLE: <span id="delete-title">({{this.title}})</span></strong>
+        <br />
+        ID: ({{this._id}})
+        <br /><br />
+        <strong>THIS ACTION CANNOT BE UNDONE!</strong>
+      </div>
+      <form method="POST" action="/library/deleteBook/{{this._id}}">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No!</button>
+          <button type="submit" class="btn btn-primary">Yes, I'm sure</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

@@ -66,7 +66,7 @@ router.post("/moveToRead/:idBook", isLoggedIn, async (req, res, next) => {
     });
 
     // redirects to the category where the book was moved 
-    res.redirect("/library/read");
+    // res.redirect("/library/read");
 
     // redirects back to the page from where the query was made
     res.redirect("back");
